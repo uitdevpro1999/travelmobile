@@ -74,7 +74,6 @@ class _CartPageState extends State<CartPage>{
                     SizedBox(width:MediaQuery.of(context).size.width*0.5 ,height: 30,
                       child: Stack(
                         children:[
-                          Container(color: Colors.white,),
                           Row(
                             children: [
                               Row(
@@ -89,7 +88,6 @@ class _CartPageState extends State<CartPage>{
                                     child: Stack(
                                         alignment: AlignmentDirectional.center,
                                         children:[
-                                          Container(color: Colors.white,),
                                           Text(widget.soluong.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                                         ]
                                     ),

@@ -6,7 +6,10 @@ import 'package:travelmobile/widget/toast.dart';
 import '../model/account/address.dart';
 import '../widget/botnavigator.dart';
 class Update extends StatefulWidget{
-  Update({Key? key}) : super (key: key);
+  String phone;
+  String street;
+  String add;
+  Update({Key? key, required this.add, required this.street,required this.phone}) : super (key: key);
   @override
   _UpdateState createState() => _UpdateState();
 }
@@ -14,6 +17,16 @@ class _UpdateState extends State<Update>{
   var phoneController = TextEditingController();
   var streetController = TextEditingController();
   var addressController = TextEditingController();
+  void set(){
+    phoneController.text= widget.phone;
+    streetController.text=widget.street;
+    addressController.text=widget.add;
+  }
+  @override
+  void initState() {
+    super.initState();
+    set();
+  }
   @override
   Widget build(BuildContext context){
     return Scaffold(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelmobile/model/account/address.dart';
-import 'package:travelmobile/page/updateprofile.dart';
 
 import '../model/account/account.dart';
+import 'updateprofile.dart';
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super (key: key);
   @override
@@ -120,7 +120,7 @@ class _ProfileState extends State<Profile>{
               setState(() {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Update()));
+                    MaterialPageRoute(builder: (context) => Update(add: data.address, street: data.houseNumberStreet, phone: data.phone)));
               });
             },
             child: Padding(
@@ -168,7 +168,7 @@ class _ProfileState extends State<Profile>{
                           setState(() {
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Update()));
+                                MaterialPageRoute(builder: (context) => Update(add: "", street: "", phone: "")));
                           });
                         },
                         child: Padding(

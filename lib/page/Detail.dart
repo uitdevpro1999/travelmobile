@@ -262,7 +262,7 @@ class _DetailState extends State<Detail>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black,),
+      appBar: AppBar(backgroundColor: Colors.black,title: Text("Chi tiết"),),
       body: Center(
           child: FutureBuilder<Product>(
           future: fetchdetailProduct(widget.uid),

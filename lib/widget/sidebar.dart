@@ -13,11 +13,11 @@ class SideNavBar extends StatelessWidget {
             height: 20.0,
           ),
           Container(
-            height: 80.0,
+            height: 200.0,
             alignment: Alignment.center,
 
             child: Image.asset(
-              'assets/logo/logo.png',
+              'assets/logo/logo3.png',fit: BoxFit.cover,
             ),
           ),
           SizedBox(
