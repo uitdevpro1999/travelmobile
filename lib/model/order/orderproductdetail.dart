@@ -3,10 +3,10 @@ part 'orderproductdetail.g.dart';
 @JsonSerializable()
 class OrderProductDetail
 {
-  int? productId;
-  int? quantity;
-  int? price;
-  int? totalPrice;
+  int productId;
+  int quantity;
+  int price;
+  int totalPrice;
   OrderProductDetail({required this.productId,required this.price, required this.quantity, required this.totalPrice});
   @override
   factory OrderProductDetail.fromJson(Map<String,dynamic> json) => _$OrderProductDetailFromJson(json);

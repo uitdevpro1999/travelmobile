@@ -6,10 +6,10 @@ part 'orderstoredetail.g.dart';
 
 @JsonSerializable()
 class OrderStoreDetail {
-  int? storeId;
-  int? totalPrice;
+  int storeId;
+  int totalPrice;
   // alll othervarialble...
-  List<OrderProductDetail> orderProductDetails;
+  List<OrderProductDetail>? orderProductDetails;
 
   //initilize all in constructor
   OrderStoreDetail({ required this.storeId, required this.totalPrice ,required this.orderProductDetails });

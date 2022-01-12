@@ -1,5 +1,9 @@
+
 import 'package:flutter/material.dart';
+import 'package:travelmobile/model/store.dart';
 import 'package:travelmobile/page/checkout.dart';
+
+import 'checkout.dart';
 class CartPage extends StatefulWidget {
   int tong;
   int gia;
@@ -25,7 +29,28 @@ class _CartPageState extends State<CartPage>{
       crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(onPressed: (){}, child: Text("Shop Thanh Hoá")),
+            FutureBuilder<Store>(
+              future: fetchStore(widget.storeId),
+              builder:  (context, snapshot) {
+                if (snapshot.hasData) {
+                  Store? data1 = snapshot.data;
+                  return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 10,),
+                                Text(data1!.name),
+                          SizedBox(height: 10,),
+                        ],
+                      );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },),
+
             SizedBox(height: 80 ,width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: [
@@ -35,7 +60,15 @@ class _CartPageState extends State<CartPage>{
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text(widget.name, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                  children: [
+
+                      Flexible(child:Text(widget.name, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),overflow: TextOverflow.ellipsis,
+
+                      ), ),
+
+
+
+
                     Text(widget.gia.toString()),
                     SizedBox(height: 1,),
                     SizedBox(width:MediaQuery.of(context).size.width*0.5 ,height: 30,
@@ -102,7 +135,7 @@ class _CartPageState extends State<CartPage>{
                             TextButton(onPressed: (){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Checkout()),
+                                MaterialPageRoute(builder: (context) => Checkout(storeId: widget.storeId, productId: widget.productId, price: widget.gia, totalPrice: widget.tong, quantity: widget.soluong)),
                               );
                             }, child: Text("Xác nhận và Thanh toán"))
                           ],

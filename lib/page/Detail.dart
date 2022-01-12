@@ -5,6 +5,7 @@ import 'package:travelmobile/model/product.dart';
 import 'package:travelmobile/page/cartpage.dart';
 import 'package:travelmobile/widget/toast.dart';
 
+import '../model/store.dart';
 import 'cartpage.dart';
 class Detail extends StatefulWidget{
   int? uid;
@@ -32,7 +33,7 @@ class _DetailState extends State<Detail>{
             children: [
               SizedBox(height:MediaQuery.of(context).size.height *0.4,width: MediaQuery.of(context).size.width,
                   child: Image.network(data.imagelink,fit: BoxFit.fill,) ),
-              SizedBox(height: MediaQuery.of(context).size.height*0.1,width: MediaQuery.of(context).size.width ,
+              SizedBox(height: MediaQuery.of(context).size.height*0.15,width: MediaQuery.of(context).size.width ,
                 child:Card(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -40,32 +41,43 @@ class _DetailState extends State<Detail>{
                     children: [
                       Text(data.name,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                       SizedBox(height:10),
-                      Text(data.price.toString(),style: TextStyle(color: Colors.red),)
+                      Text(data.price.toString()+" đ",style: TextStyle(color: Colors.red),)
                     ],
                   ) ,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height*0.1,width: MediaQuery.of(context).size.width ,
-                child: Card(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: MediaQuery.of(context).size.height*0.1,width: MediaQuery.of(context).size.width*0.2 ,
-                        child: Image.network("https://image-us.eva.vn/upload/3-2021/images/2021-08-04/chi-em-mua-sam-online-dung-quen-cho-vao-gio-ngay-nhung-loai-thuc-pham-de-tru-de-nau-nay-bach-hoa-2-1628047095-790-width600height833.jpg",fit: BoxFit.fill,) ,),
-                      SizedBox(width: 5,),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 10,),
-                            Text("Shop Thanh Hoá"),
-                            Text("Địa chỉ: Thanh Hoá"),
+                FutureBuilder<Store>(
+                 future: fetchStore(data.storeId),
+                     builder:  (context, snapshot) {
+                     if (snapshot.hasData) {
+                        Store? data1 = snapshot.data;
+                     return SizedBox(height: MediaQuery.of(context).size.height*0.1,width: MediaQuery.of(context).size.width ,
+                       child: Card(
+                         child: Row(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             SizedBox(height: MediaQuery.of(context).size.height*0.1,width: MediaQuery.of(context).size.width*0.2 ,
+                               child: Image.network("https://image-us.eva.vn/upload/3-2021/images/2021-08-04/chi-em-mua-sam-online-dung-quen-cho-vao-gio-ngay-nhung-loai-thuc-pham-de-tru-de-nau-nay-bach-hoa-2-1628047095-790-width600height833.jpg",fit: BoxFit.fill,) ,),
+                             SizedBox(width: 25,),
+                             Column(
+                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                 children: [
+                                   SizedBox(height: 20,),
+                                   Text(data1!.name),
+                                 ]
+                             ),
+                             SizedBox(width: 90,),
 
-                          ]
-                      ),
-                      SizedBox(width: 70,),
-                      TextButton(onPressed: (){}, child: Text("Xem shop"))
-                    ],
-                  ),),),
+                           ],
+                         ),),);
+                   } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                    }
+
+    // By default, show a loading spinner.
+                    return const CircularProgressIndicator();
+                     },),
+
               Container(
                 margin: EdgeInsets.all(5),
                 color: Colors.green,
@@ -230,8 +242,6 @@ class _DetailState extends State<Detail>{
                              var toast= ProjectToast(msg: "Bạn chưa chọn số lượng, vui lòng thử lại");
                              toast.pshowToast();}
                             else{
-                                 var toast= ProjectToast(msg: "Thêm vào thành công");
-                                  toast.pshowToast();
                                  Navigator.push(
                                      context,
                                      MaterialPageRoute(builder: (context) => CartPage(tong: tong, gia: data.price, soluong: soluong, storeId: data.storeId,name: data.name,productId: data.id, picture: data.imagelink)));

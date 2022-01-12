@@ -7,7 +7,7 @@ class ProjectToast {
 
    void pshowToast() {
      Fluttertoast.showToast(
-      msg: 'Message: $msg',
+      msg: 'Thông báo: $msg',
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,

@@ -11,6 +11,7 @@ import 'package:travelmobile/widget/sidebar.dart';
 
 import '../model/order/orderstoredetail.dart';
 import '../model/product.dart';
+import '../widget/itemCard.dart';
 import 'Detail.dart';
 
 class MainPage extends StatefulWidget {
@@ -57,56 +58,11 @@ class _MainPageState extends State<MainPage> {
         itemBuilder: (context, index)
               {
                 print(data[index].id);
-      return itemCard(data[index].id,data[index].imagelink,data[index].price, data[index].name);
+      return ItemCard(id: data[index].id, name: data[index].name, imagelink: data[index].imagelink, price: data[index].price);
     }
     );
   }
-  @override
-  Card itemCard(int id, String imagelink, int price, String name) => Card(
-    child: InkWell(
-      splashColor: Colors.blue.withAlpha(30),
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Detail(uid: id)));
-      },
 
-      child: Column(
-        children: [
-          Expanded(
-            child: Image.network(
-              imagelink,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(top: 08.0),
-            child: Text(
-              name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  color: Colors.black,
-
-                  fontSize: 14.0),
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(top: 05.0, bottom: 02.0),
-            child: Text(
-              price.toString(),
-              style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(

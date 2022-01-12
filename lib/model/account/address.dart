@@ -50,8 +50,8 @@ update(String phone,String street, String address) async {
   if (response.statusCode == 200) {
     jsonResponse = jsonDecode(response.body);
     if (jsonResponse != null) {
-      sharedPreferences.setString("token", jsonResponse['data']['token']);
-
+      var toast = new ProjectToast(msg: "Cập nhật thành công");
+      toast.pshowToast();
     }
   else {
     var toast = new ProjectToast(msg: "Cập nhật thất bại");
