@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:travelmobile/model/order/orderproductdetail.dart';
 import 'package:travelmobile/model/order/orderstoredetail.dart';
@@ -6,7 +8,7 @@ import 'package:travelmobile/page/cartpage.dart';
 import 'package:travelmobile/widget/toast.dart';
 
 import '../model/store.dart';
-import 'cartpage.dart';
+import 'store.dart';
 class Detail extends StatefulWidget{
   int? uid;
 
@@ -30,10 +32,12 @@ class _DetailState extends State<Detail>{
 
         SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+
             children: [
               SizedBox(height:MediaQuery.of(context).size.height *0.4,width: MediaQuery.of(context).size.width,
                   child: Image.network(data.imagelink,fit: BoxFit.fill,) ),
-              SizedBox(height: MediaQuery.of(context).size.height*0.15,width: MediaQuery.of(context).size.width ,
+              SizedBox(height: MediaQuery.of(context).size.height*0.12,width: MediaQuery.of(context).size.width ,
                 child:Card(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -62,12 +66,17 @@ class _DetailState extends State<Detail>{
                              Column(
                                  crossAxisAlignment: CrossAxisAlignment.center,
                                  children: [
-                                   SizedBox(height: 20,),
+                                   SizedBox(height: 15,),
                                    Text(data1!.name),
                                  ]
                              ),
-                             SizedBox(width: 90,),
-
+                             SizedBox(width: 100,),
+                            TextButton(onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => StorePage(storeId: data1.id, storeName: data1.name)));
+                            },
+                              child: Text("Xem cửa hàng",style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),),),
                            ],
                          ),),);
                    } else if (snapshot.hasError) {
@@ -77,7 +86,21 @@ class _DetailState extends State<Detail>{
     // By default, show a loading spinner.
                     return const CircularProgressIndicator();
                      },),
-
+            Card(
+                child:Row(children: [
+                  SizedBox(width: 10,),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("ID sản phẩm:" + data.id.toString()),
+                        SizedBox(height: 20,),
+                        Text("Số lượng hàng trong kho: "+ data.stock.toString()),
+                      ]
+                  ),
+                ],),
+             ),
+            SizedBox(width: 90,),
               Container(
                 margin: EdgeInsets.all(5),
                 color: Colors.green,

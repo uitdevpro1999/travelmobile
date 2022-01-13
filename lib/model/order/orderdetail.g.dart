@@ -8,6 +8,7 @@ part of 'orderdetail.dart';
 
 OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
   return OrderDetail(
+    status: json['status'] as String,
     userId: json['userId'] as int,
     totalPrice: json['totalPrice'] as int,
     receiverName: json['receiverName'] as String,
@@ -17,13 +18,17 @@ OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
     address: json['address'] as String,
     paymentMethod: json['paymentMethod'] as String,
     shipmentMethod: json['shipmentMethod'] as String,
-    orderStoreDetails: (json['orderStoreDetails'] as List<dynamic>).map((e) => OrderStoreDetail.fromJson(e as Map<String, dynamic>))
-        .toList(),
+    id: json['id'] as int,
+    orderStoreDetailEntities:
+        (json['orderStoreDetailEntities'] as List<dynamic>?)
+            ?.map((e) => OrderStoreDetail.fromJson(e as Map<String, dynamic>))
+            .toList(),
   );
 }
 
 Map<String, dynamic> _$OrderDetailToJson(OrderDetail instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'userId': instance.userId,
       'totalPrice': instance.totalPrice,
       'receiverName': instance.receiverName,
@@ -33,5 +38,5 @@ Map<String, dynamic> _$OrderDetailToJson(OrderDetail instance) =>
       'address': instance.address,
       'shipmentMethod': instance.shipmentMethod,
       'paymentMethod': instance.paymentMethod,
-      'orderStoreDetails': instance.orderStoreDetails,
+      'orderStoreDetailEntities': instance.orderStoreDetailEntities,
     };

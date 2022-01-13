@@ -3,6 +3,7 @@ import 'package:travelmobile/model/order/orderdetail.dart';
 
 import '../page/explorer.dart';
 import '../page/homepage.dart';
+import '../page/orderfollowing.dart';
 import '../page/profilepage.dart';
 class BotNav extends StatefulWidget {
   const BotNav({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _BotNavState extends State<BotNav> {
   static List<Widget> _widgetOptions = <Widget>[
     MainPage(),
     Explorer(),
-    Text("Notification"),
+    Order(),
     Profile(),
   ];
 

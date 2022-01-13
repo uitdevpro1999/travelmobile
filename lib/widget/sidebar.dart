@@ -17,7 +17,7 @@ class SideNavBar extends StatelessWidget {
             alignment: Alignment.center,
 
             child: Image.asset(
-              'assets/logo/logo3.png',fit: BoxFit.cover,
+              'assets/logo/logo2.png',fit: BoxFit.cover,
             ),
           ),
           SizedBox(

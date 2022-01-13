@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:travelmobile/model/store.dart';
 import 'package:travelmobile/page/checkout.dart';
 
-import 'checkout.dart';
 class CartPage extends StatefulWidget {
   int tong;
   int gia;

@@ -60,6 +60,21 @@ Future<List<Product>> fetchProduct() async{
     throw Exception('fail to load Product from API');
   }
 }
+Future<List<Product>> fetchProductStore(int id) async{
+
+  var url = Uri.http('api.travelmart.store','/api/v1/products/store/$id/products',);
+  var response = await http.get(url);
+  if(response.statusCode == 200)
+  {
+    Map<String,dynamic> jsonResponse = jsonDecode((utf8.decode(response.bodyBytes)));
+    List<dynamic> products = jsonResponse['data'];
+    return products.map((product) =>  Product.fromJson(product)).toList();
+
+  }
+  else{
+    throw Exception('fail to load Product from API');
+  }
+}
 Future<Product> fetchdetailProduct(int? id) async{
   var url = 'http://api.travelmart.store/api/v1/products/$id';
   var response = await http.get(Uri.parse(url));
