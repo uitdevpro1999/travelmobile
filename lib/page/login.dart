@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:travelmobile/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelmobile/page/signup.dart';
+import 'package:travelmobile/widget/toast.dart';
 
 import '../widget/botnavigator.dart';
-import '../widget/toast.dart';
 import 'homepage.dart';
 class LoginPage extends StatefulWidget {
   @override
@@ -83,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
     else {
       setState(() {
         _isLoading = false;
+        new ProjectToast(msg: "Đăng nhập thất bại");
       });
     }
   }

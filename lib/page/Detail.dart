@@ -24,6 +24,7 @@ class _DetailState extends State<Detail>{
   int soluong =0 ;
   int gia = 70000;
   int tong =0;
+  String storeName="";
   @override
   Stack _detail(data){
     return Stack(
@@ -55,7 +56,8 @@ class _DetailState extends State<Detail>{
                      builder:  (context, snapshot) {
                      if (snapshot.hasData) {
                         Store? data1 = snapshot.data;
-                     return SizedBox(height: MediaQuery.of(context).size.height*0.1,width: MediaQuery.of(context).size.width ,
+                        storeName= data1!.name;
+                        return SizedBox(height: MediaQuery.of(context).size.height*0.1,width: MediaQuery.of(context).size.width ,
                        child: Card(
                          child: Row(
                            crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,10 +69,10 @@ class _DetailState extends State<Detail>{
                                  crossAxisAlignment: CrossAxisAlignment.center,
                                  children: [
                                    SizedBox(height: 15,),
-                                   Text(data1!.name),
+                                   Text(data1.name),
                                  ]
                              ),
-                             SizedBox(width: 100,),
+                             SizedBox(width: 60,),
                             TextButton(onPressed: () {
                               Navigator.push(
                                   context,
@@ -96,6 +98,10 @@ class _DetailState extends State<Detail>{
                         Text("ID sản phẩm:" + data.id.toString()),
                         SizedBox(height: 20,),
                         Text("Số lượng hàng trong kho: "+ data.stock.toString()),
+                        SizedBox(height: 20,),
+                        Text("Xuất xứ: "+ data.productLocation),
+                        SizedBox(height: 20,),
+                        Text("Loại sản phẩm: "+ data.productType),
                       ]
                   ),
                 ],),
@@ -267,7 +273,7 @@ class _DetailState extends State<Detail>{
                             else{
                                  Navigator.push(
                                      context,
-                                     MaterialPageRoute(builder: (context) => CartPage(tong: tong, gia: data.price, soluong: soluong, storeId: data.storeId,name: data.name,productId: data.id, picture: data.imagelink)));
+                                     MaterialPageRoute(builder: (context) => CartPage(tong: tong, gia: data.price, soluong: soluong, storeId: data.storeId,name: data.name,productId: data.id, picture: data.imagelink,storeName: storeName)));
                             }
                           }, child: Text("Mua ngay"))
                         ],

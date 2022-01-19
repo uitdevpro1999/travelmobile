@@ -6,7 +6,8 @@ class ItemCard extends StatelessWidget{
   String? name;
   String? imagelink;
   int? price;
-  ItemCard({Key? key, required this.id, required this.name, required this.imagelink , required this.price});
+  String? productloc;
+  ItemCard({Key? key, required this.id, required this.name, required this.imagelink , required this.price, required this.productloc});
   @override
   Widget build(BuildContext context){
     return Card(
@@ -47,6 +48,19 @@ class ItemCard extends StatelessWidget{
                     fontSize: 15.0,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                padding: EdgeInsets.only(top: 08.0),
+                child: Text(
+                  productloc!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.black,
+
+                      fontSize: 14.0),
                 ),
               ),
             ],

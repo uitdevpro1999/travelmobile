@@ -19,9 +19,9 @@ OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
     paymentMethod: json['paymentMethod'] as String,
     shipmentMethod: json['shipmentMethod'] as String,
     id: json['id'] as int,
-    orderStoreDetailEntities:
-        (json['orderStoreDetailEntities'] as List<dynamic>?)
-            ?.map((e) => OrderStoreDetail.fromJson(e as Map<String, dynamic>))
+    orderStoreDetails:
+        (json['orderStoreDetails'] as List<dynamic>)
+            .map((e) => OrderStoreDetail.fromJson(e as Map<String, dynamic>))
             .toList(),
   );
 }
@@ -38,5 +38,5 @@ Map<String, dynamic> _$OrderDetailToJson(OrderDetail instance) =>
       'address': instance.address,
       'shipmentMethod': instance.shipmentMethod,
       'paymentMethod': instance.paymentMethod,
-      'orderStoreDetailEntities': instance.orderStoreDetailEntities,
+      'orderStoreDetails': instance.orderStoreDetails,
     };

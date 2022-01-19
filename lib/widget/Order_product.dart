@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:travelmobile/model/order/orderproductdetail.dart';
-import 'package:travelmobile/model/store.dart';
+import 'package:travelmobile/model/product.dart';
 
+import '../page/Detail.dart';
 import '../page/orderproduct.dart';
 
 
-class OrderStoreSum extends StatelessWidget {
+class OrderProductSum extends StatelessWidget {
   int totalPrice;
   int id;
-  int orderId;
-  String status;
-  int storeId;
-  List<OrderProductDetail> orderproduct;
-  OrderStoreSum({Key? key,required this.storeId,required this.id,required this.status, required this.totalPrice,required this.orderId,required this.orderproduct}) : super(key: key);
+  int productId;
+  int price;
+   int quantity;
+  OrderProductSum({Key? key,required this.id,required this.price, required this.totalPrice,required this.productId,required this.quantity}) : super(key: key);
 
 
   @override
@@ -40,13 +39,13 @@ class OrderStoreSum extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 4),
-              FutureBuilder<Store>(
-                future: fetchStore(storeId),
+              FutureBuilder<Product>(
+                future: fetchdetailProduct(productId),
                 builder:  (context, snapshot) {
                   if (snapshot.hasData) {
-                    Store? data1 = snapshot.data;
-                    return  Text(
-                      data1!.name,
+                    Product? data = snapshot.data;
+                    return Text(
+                      data!.name,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Color(0xFF0057BE),
@@ -58,11 +57,12 @@ class OrderStoreSum extends StatelessWidget {
 
                   // By default, show a loading spinner.
                   return const CircularProgressIndicator();
-                },),
+                },
+              ),
 
               const SizedBox(height: 4),
               Text(
-                "ID đơn hàng từ cửa hàng: "+ id.toString(),
+                "ID đơn hàng theo sản phẩm: "+ id.toString(),
                 style: const TextStyle(
                   fontSize: 14,
                   color: Color(0xFF2E3B52),
@@ -70,8 +70,25 @@ class OrderStoreSum extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                "ID đơn hàng: "+ orderId.toString(),
+                "ID sản phẩm: "+ productId.toString(),
                 style: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF2E3B52),
+                ),
+              ),
+
+              const SizedBox(height: 4),
+              Text(
+                "Số lượng: " + quantity.toString(),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF2E3B52),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "Giá: " + price.toString(),
+                style: TextStyle(
                   fontSize: 14,
                   color: Color(0xFF2E3B52),
                 ),
@@ -84,29 +101,16 @@ class OrderStoreSum extends StatelessWidget {
                   color: Color(0xFF2E3B52),
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                "Trạng thái: " + status,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF2E3B52),
-                ),
-              ),
             ],
 
           ),
 
           const Spacer(),
-         Column(
-           children: [
-             IconButton(onPressed: (){
-               Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (context) =>OrderProduct(orderproduct: orderproduct)));
-             }, icon: Icon(Icons.navigate_next)),
-
-           ],
-         )
+          IconButton(onPressed: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>Detail(uid: productId)));
+          }, icon: Icon(Icons.navigate_next))
         ],
       ),
     );

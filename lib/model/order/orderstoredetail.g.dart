@@ -13,9 +13,9 @@ OrderStoreDetail _$OrderStoreDetailFromJson(Map<String, dynamic> json) {
     status: json['status'] as String,
     storeId: json['storeId'] as int,
     totalPrice: json['totalPrice'] as int,
-    orderProductDetailEntities:
-        (json['orderProductDetailEntities'] as List<dynamic>?)
-            ?.map((e) => OrderProductDetail.fromJson(e as Map<String, dynamic>))
+    orderProductDetails:
+        (json['orderProductDetails'] as List<dynamic>)
+            .map((e) => OrderProductDetail.fromJson(e as Map<String, dynamic>))
             .toList(),
   );
 }
@@ -27,5 +27,5 @@ Map<String, dynamic> _$OrderStoreDetailToJson(OrderStoreDetail instance) =>
       'storeId': instance.storeId,
       'totalPrice': instance.totalPrice,
       'status': instance.status,
-      'orderProductDetailEntities': instance.orderProductDetailEntities,
+      'orderProductDetails': instance.orderProductDetails,
     };

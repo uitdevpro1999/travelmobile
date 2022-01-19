@@ -66,11 +66,41 @@ class _ProfileState extends State<Profile>{
             EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
             child: ListTile(
               leading: Icon(
+                Icons.person_rounded,
+                color: Colors.teal[900],
+              ),
+              title: Text(
+                data.name,
+                style:
+                TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
+              ),
+            )),
+        Card(
+            color: Colors.white,
+            margin:
+            EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+            child: ListTile(
+              leading: Icon(
                 Icons.phone,
                 color: Colors.teal[900],
               ),
               title: Text(
                 data.phone,
+                style:
+                TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
+              ),
+            )),
+        Card(
+            color: Colors.white,
+            margin:
+            EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+            child: ListTile(
+              leading: Icon(
+                Icons.phone,
+                color: Colors.teal[900],
+              ),
+              title: Text(
+                data.email,
                 style:
                 TextStyle(fontFamily: 'BalooBhai', fontSize: 20.0),
               ),
@@ -120,7 +150,7 @@ class _ProfileState extends State<Profile>{
               setState(() {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Update(add: data.address, street: data.houseNumberStreet, phone: data.phone)));
+                    MaterialPageRoute(builder: (context) => Update(add: data.address, street: data.houseNumberStreet, phone: data.phone,name: data.name,mail: data.email,)));
               });
             },
             child: Padding(
@@ -168,7 +198,7 @@ class _ProfileState extends State<Profile>{
                           setState(() {
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Update(add: "", street: "", phone: "")));
+                                MaterialPageRoute(builder: (context) => Update(add: "", street: "", phone: "",name: "",mail: "",)));
                           });
                         },
                         child: Padding(

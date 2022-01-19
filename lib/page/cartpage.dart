@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:travelmobile/model/store.dart';
 import 'package:travelmobile/page/checkout.dart';
-
+import 'package:travelmobile/widget/choose_list.dart';
+final items = ["Bình thường", "Quà tặng"];
 class CartPage extends StatefulWidget {
   int tong;
   int gia;
@@ -11,18 +12,20 @@ class CartPage extends StatefulWidget {
   String name;
   int productId;
   String picture;
-  CartPage({Key? key, required this.tong, required this.gia, required this.soluong, required this.storeId,required this.name,required this.productId, required this.picture}) : super(key: key);
+  String storeName;
+  CartPage({Key? key, required this.tong, required this.gia, required this.soluong, required this.storeId,required this.name,required this.productId, required this.picture,required this.storeName}) : super(key: key);
 
   @override
   _CartPageState createState() => _CartPageState();
 }
 class _CartPageState extends State<CartPage>{
   @override
+  var a= TextEditingController();
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(title: Text("Giỏ hàng"), backgroundColor: Colors.black,),
       body: Stack(
-        children:[
+        children:<Widget>[
           SingleChildScrollView(
             child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,8 +107,16 @@ class _CartPageState extends State<CartPage>{
                     ),
                   ],),
               ]
-          )
-            )
+          ),
+            ),
+           SizedBox(height: 20,),
+           ChooseList(
+             backgroundColor: Colors.grey,
+               label: 'Đóng gói',
+               controller: a,
+               width:200,
+               hintText: '',
+               items: items)
         ]
       ),
     ),
@@ -132,7 +143,7 @@ class _CartPageState extends State<CartPage>{
                             TextButton(onPressed: (){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Checkout(storeId: widget.storeId, productId: widget.productId, price: widget.gia, totalPrice: widget.tong, quantity: widget.soluong)),
+                                MaterialPageRoute(builder: (context) => Checkout(storeId: widget.storeId, productId: widget.productId, price: widget.gia, totalPrice: widget.tong, quantity: widget.soluong,name: widget.name,storeName: widget.storeName,packing: a.text)),
                               );
                             }, child: Text("Xác nhận và Thanh toán"))
                           ],

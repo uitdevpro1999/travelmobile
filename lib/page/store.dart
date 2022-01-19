@@ -38,7 +38,7 @@ class _StorePageState extends State<StorePage> {
         itemBuilder: (context, index)
         {
           print(data[index].id);
-          return ItemCard(id: data[index].id, name: data[index].name, imagelink: data[index].imagelink, price: data[index].price);
+          return ItemCard(id: data[index].id, name: data[index].name, imagelink: data[index].imagelink, price: data[index].price,productloc: data[index].productLocation,);
         }
     );
   }

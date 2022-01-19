@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:travelmobile/model/order/orderstoredetail.dart';
+import 'package:travelmobile/page/orderstore.dart';
+
+import '../model/order/orderdetail.dart';
+import 'botnavigator.dart';
+
 
 
 class OrderSummary extends StatelessWidget {
@@ -9,15 +15,16 @@ class OrderSummary extends StatelessWidget {
    int id;
    String status;
    String name;
+   List<OrderStoreDetail> orderstore;
 
-  OrderSummary({Key? key,required this.id,required this.status,required this.street, required this.phone, required this.totalPrice, required this.address,required this.name}) : super(key: key);
+  OrderSummary({Key? key,required this.id,required this.status,required this.street, required this.phone, required this.totalPrice, required this.address,required this.name,required this.orderstore}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 200,
+      height: 250,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
       margin: const EdgeInsets.fromLTRB(2, 0, 2, 15),
       decoration: BoxDecoration(
@@ -71,9 +78,9 @@ class OrderSummary extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                "Địa chỉ: "+address,
+                "Địa chỉ: "+address,softWrap: true,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 11.7,
                   color: Color(0xFF2E3B52),
                 ),
               ),
@@ -98,9 +105,24 @@ class OrderSummary extends StatelessWidget {
           ),
 
           const Spacer(),
-          IconButton(onPressed: (){
+          Column(
+                      children: [
+                        IconButton(onPressed: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => OrderStore(orderstore: orderstore)));
+                        }, icon: Icon(Icons.navigate_next)),
+                        status =="CREATED" ? IconButton(onPressed: (){
+                          cancelOrder(id);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => BotNav()));
+                        }, icon: Icon(Icons.delete_forever)) :Container() ,
+                      ],
 
-          }, icon: Icon(Icons.navigate_next))
+          ),
+
+
         ],
       ),
     );

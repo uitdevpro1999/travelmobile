@@ -16,10 +16,10 @@ class OrderStoreDetail {
   int totalPrice;
   String status;
   // alll othervarialble...
-  List<OrderProductDetail>? orderProductDetailEntities;
+  List<OrderProductDetail> orderProductDetails;
 
   //initilize all in constructor
-  OrderStoreDetail({required this.id,required this.orderId,required this.status, required this.storeId, required this.totalPrice ,required this.orderProductDetailEntities });
+  OrderStoreDetail({required this.id,required this.orderId,required this.status, required this.storeId, required this.totalPrice ,required this.orderProductDetails });
   @override
   factory OrderStoreDetail.fromJson(Map<String, dynamic> json) => _$OrderStoreDetailFromJson(json);
   Map<String, dynamic> toJson() => _$OrderStoreDetailToJson(this);

@@ -10,13 +10,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelmobile/widget/botnavigator.dart';
 import 'package:travelmobile/widget/toast.dart';
 
+import '../model/account/address.dart';
+
 class Checkout extends StatefulWidget {
+  String name;
   int storeId;
   int productId;
   int quantity;
   int price;
   int totalPrice;
-  Checkout({Key?key, required this.storeId, required this.productId, required this.price, required this.totalPrice, required this.quantity});
+  String storeName;
+  String packing;
+  Checkout({Key?key, required this.storeId, required this.productId, required this.price, required this.totalPrice, required this.quantity,required this.name,required this.storeName,required this.packing});
   @override
   _CheckoutState createState() => _CheckoutState();
 }
@@ -44,110 +49,347 @@ class _CheckoutState extends State<Checkout> {
   Widget _body(){
     return ListView(
         children: <Widget>[
-          Container(
-            padding: const EdgeInsets.only(left: 14.0, top: 14.0),
-            child: Text("Thông tin thanh toán",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0
-              ),
-            ),
+          FutureBuilder<Address>(
+            future: getAddress(),
+            builder:  (context, snapshot) {
+              if (snapshot.hasData) {
+                Address? data = snapshot.data;
+                namecontrol.text = data!.name!;
+                streetcontrol.text = data.houseNumberStreet!;
+                addresscontrol.text = data.address!;
+                phonecontrol.text = data.phone!;
+                mailcontrol.text=data.email!;
+                return Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 14.0, top: 14.0),
+                      child: Text("Thông tin thanh toán",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20,),
+                    TextField(
+                      controller: namecontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Họ và tên',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      controller: mailcontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      controller: phonecontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Số điện thoại',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      controller: streetcontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Số nhà',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      controller: addresscontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Địa chỉ',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 14.0, top: 14.0),
+                      child: Text("Thông tin thanh toán",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20,),
+                    TextField(
+                      controller: namecontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Họ và tên',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      controller: mailcontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      controller: phonecontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Số điện thoại',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      controller: streetcontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Số nhà',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      controller: addresscontrol,
+                      decoration: InputDecoration(
+                        hintText: 'Địa chỉ',
+                        filled: true,
+                        fillColor: Colors.blueGrey[50],
+                        labelStyle: TextStyle(fontSize: 12),
+                        contentPadding: EdgeInsets.only(left: 30),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueGrey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              // By default, show a loading spinner.
+              return Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 14.0, top: 14.0),
+                    child: Text("Thông tin thanh toán",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  TextField(
+                    controller: namecontrol,
+                    decoration: InputDecoration(
+                      hintText: 'Họ và tên',
+                      filled: true,
+                      fillColor: Colors.blueGrey[50],
+                      labelStyle: TextStyle(fontSize: 12),
+                      contentPadding: EdgeInsets.only(left: 30),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  TextField(
+                    controller: mailcontrol,
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      filled: true,
+                      fillColor: Colors.blueGrey[50],
+                      labelStyle: TextStyle(fontSize: 12),
+                      contentPadding: EdgeInsets.only(left: 30),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  TextField(
+                    controller: phonecontrol,
+                    decoration: InputDecoration(
+                      hintText: 'Số điện thoại',
+                      filled: true,
+                      fillColor: Colors.blueGrey[50],
+                      labelStyle: TextStyle(fontSize: 12),
+                      contentPadding: EdgeInsets.only(left: 30),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  TextField(
+                    controller: streetcontrol,
+                    decoration: InputDecoration(
+                      hintText: 'Số nhà',
+                      filled: true,
+                      fillColor: Colors.blueGrey[50],
+                      labelStyle: TextStyle(fontSize: 12),
+                      contentPadding: EdgeInsets.only(left: 30),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  TextField(
+                    controller: addresscontrol,
+                    decoration: InputDecoration(
+                      hintText: 'Địa chỉ',
+                      filled: true,
+                      fillColor: Colors.blueGrey[50],
+                      labelStyle: TextStyle(fontSize: 12),
+                      contentPadding: EdgeInsets.only(left: 30),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
-          SizedBox(height: 20,),
-          TextField(
-            controller: namecontrol,
-            decoration: InputDecoration(
-              hintText: 'Họ và tên',
-              filled: true,
-              fillColor: Colors.blueGrey[50],
-              labelStyle: TextStyle(fontSize: 12),
-              contentPadding: EdgeInsets.only(left: 30),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
-          SizedBox(height: 10,),
-          TextField(
-            controller: mailcontrol,
-            decoration: InputDecoration(
-              hintText: 'Email',
-              filled: true,
-              fillColor: Colors.blueGrey[50],
-              labelStyle: TextStyle(fontSize: 12),
-              contentPadding: EdgeInsets.only(left: 30),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
-          SizedBox(height: 10,),
-          TextField(
-            controller: phonecontrol,
-            decoration: InputDecoration(
-              hintText: 'Số điện thoại',
-              filled: true,
-              fillColor: Colors.blueGrey[50],
-              labelStyle: TextStyle(fontSize: 12),
-              contentPadding: EdgeInsets.only(left: 30),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
-          SizedBox(height: 10,),
-          TextField(
-            controller: streetcontrol,
-            decoration: InputDecoration(
-              hintText: 'Số nhà',
-              filled: true,
-              fillColor: Colors.blueGrey[50],
-              labelStyle: TextStyle(fontSize: 12),
-              contentPadding: EdgeInsets.only(left: 30),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
-          SizedBox(height: 10,),
-          TextField(
-            controller: addresscontrol,
-            decoration: InputDecoration(
-              hintText: 'Địa chỉ',
-              filled: true,
-              fillColor: Colors.blueGrey[50],
-              labelStyle: TextStyle(fontSize: 12),
-              contentPadding: EdgeInsets.only(left: 30),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-          ),
+
           Container(
             padding: const EdgeInsets.only(left: 14.0, top: 14.0),
             child: Text("Phương thức vận chuyển",
@@ -220,6 +462,18 @@ void submit() async {
      String? token = sharedPreferences.getString("token");
      int? userId = sharedPreferences.getInt("id");
      var jsonResponse;
+     var c;
+     if(widget.packing =="Bình thường")
+       {
+         c= "NORMAL";
+       }
+     else if(widget.packing =="Quà tặng")
+       {
+         c="GIFT";
+       }
+     else{
+       c="NORMAL";
+     }
      if(pay=="Thanh toán khi nhận hàng")
      {
        pay="COD";
@@ -257,6 +511,7 @@ void submit() async {
            'shipmentMethod': ship,
            'paymentMethod': pay,
            'orderStoreDetails': [{
+             'storeName': widget.storeName,
              'storeId': widget.storeId,
              'totalPrice': widget.totalPrice,
              'orderProductDetails': [{
@@ -264,6 +519,8 @@ void submit() async {
                'quantity' : widget.quantity,
                'price': widget.price,
                'totalPrice': widget.totalPrice,
+               'productName': widget.name,
+               'packageMethod': c,
              }],
            },
            ],

@@ -3,16 +3,18 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class Product{
-  int? id;
-  String? name;
+  int id;
+  String name;
   int? storeId;
-  String? description;
-  int? price;
-  int? stock;
-  int? sold;
-  String? createdAt;
-  String? imagelink;
-  bool? activated;
+  String description;
+  int price;
+  int stock;
+  int sold;
+  String createdAt;
+  String imagelink;
+  bool activated;
+  String productType;
+  String productLocation;
   Product({
     required this.id,
     required this.name,
@@ -24,6 +26,8 @@ class Product{
     required this.createdAt,
     required this.imagelink,
     required this.activated,
+    required this.productType,
+    required this.productLocation,
   });
   factory Product.fromJson(Map<String,dynamic> json)
   {
@@ -38,12 +42,14 @@ class Product{
       createdAt: json["createdAt"],
       imagelink: json["images"],
       activated: json["activated"],
+      productType: json["productType"],
+      productLocation: json["productLocation"],
     );
   }
 }
 Future<List<Product>> fetchProduct() async{
   var queryparams = {
-    'limit': "20",
+    'limit': "1000",
     'offset': "0",
     'orderBy': 'name',
   };

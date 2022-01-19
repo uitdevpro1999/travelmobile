@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:travelmobile/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelmobile/page/login.dart';
+import 'package:travelmobile/widget/toast.dart';
 
 import '../widget/botnavigator.dart';
-import '../widget/toast.dart';
 import 'homepage.dart';
 class SignupPage extends StatefulWidget {
   @override
@@ -53,7 +53,7 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  signin(String username, pass, email, repeate) async {
+  signup(String username, pass, email, repeate) async {
      var jsonResponse;
       var response = await http.post(Uri.parse('http://api.travelmart.store/auth/register'),
         headers: <String, String>{
@@ -63,13 +63,14 @@ class _SignupPageState extends State<SignupPage> {
           "confirmPassword": repeate,
           "username": username,
           "email": email,
-          "password": "123456",
+          "password": pass,
           "toc": "true",
         }));
        if(response.statusCode == 200) {
       jsonResponse = jsonDecode(response.body);
       print(jsonResponse);
-
+      var a =new ProjectToast(msg: "Đăng ký thành công");
+      a.pshowToast();
       if(jsonResponse != null) {
         setState(() {
           _isLoading = false;
@@ -98,7 +99,7 @@ class _SignupPageState extends State<SignupPage> {
                 _isLoading = true;
               }
               );
-              signin(usernameController.text, passwordController.text,emailController.text,confirmpassController.text);
+              signup(usernameController.text, passwordController.text,emailController.text,confirmpassController.text);
               usernameController.clear();
               passwordController.clear();
               emailController.clear();

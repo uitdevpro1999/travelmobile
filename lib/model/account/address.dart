@@ -10,14 +10,18 @@ class Address{
   String? houseNumberStreet;
   String? address;
   String? phone;
-  Address({required this.id, required this.username, required this.houseNumberStreet, required this.address, required this.phone});
+  String? name;
+  String? email;
+  Address({required this.id, required this.username, required this.houseNumberStreet, required this.address, required this.phone, required this.name, required this.email});
   factory Address.fromJson(Map<String,dynamic> json){
       return Address(
           id: json['id'],
           username: json['username'],
           houseNumberStreet: json['houseNumberStreet'],
           address: json['address'],
-          phone: json['phone']
+          phone: json['phone'],
+          name: json['name'],
+        email: json['email'],
       );
   }
 }
@@ -35,7 +39,7 @@ Future<Address> getAddress() async{
     throw Exception('fail to load Address Info from API');
   }
 }
-update(String phone,String street, String address) async {
+update(String phone,String street, String address,String name,String mail) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String? token = sharedPreferences.getString("token");
   var jsonResponse;
@@ -46,6 +50,8 @@ update(String phone,String street, String address) async {
         'phone': phone,
         'houseNumberStreet': street,
         'address': address,
+        'name': name,
+        'email':mail,
       }));
   if (response.statusCode == 200) {
     jsonResponse = jsonDecode(response.body);

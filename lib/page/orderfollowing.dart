@@ -15,7 +15,7 @@ class _OrderState extends State<Order>{
       shrinkWrap: true,
         itemCount: data.length,
         itemBuilder: (context, index) {
-            return OrderSummary(id: data[index].id, status: data[index].status, street: data[index].houseNumberStreet, phone: data[index].phone, totalPrice: data[index].totalPrice, address: data[index].address,name: data[index].receiverName,);
+            return OrderSummary(id: data[index].id, status: data[index].status, street: data[index].houseNumberStreet, phone: data[index].phone, totalPrice: data[index].totalPrice, address: data[index].address,name: data[index].receiverName,orderstore: data[index].orderStoreDetails);
           });
 
   }
