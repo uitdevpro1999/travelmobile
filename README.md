@@ -1,16 +1,13 @@
-# travelmobile
+# Phát triển hệ thống thương mại điện tử dành cho lĩnh vực mua bán đặc sản vùng miền
 
-A new Flutter project.
+Công nghệ sử dụng: Mobile: Flutter
+                   Front-end: NextJS
+                   Back-end: JavaSpring Boot
+                   Database: MySQL
+                   Utilities: Google Kubernetes Engine, Docker
+Thực hiện: Nguyễn Quốc Trung - Lê Thanh Quang
+## Chức năng
 
-## Getting Started
+- Người bán: Đăng ký mở gian hàng, quản lý đơn hàng, quản lý sản phẩm.
+- Người mua: Đăng ký tài khoản, mua hàng, theo dõi đơn hàng.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
